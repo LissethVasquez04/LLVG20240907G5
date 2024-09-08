@@ -1,0 +1,40 @@
+﻿@using LLVG20240907.DTOs.ProductsDTOs;
+@model IEnumerable<LLVG20240907.DTOs.ProductsDTOs.SearchResultProductLLVGDTO>
+
+@{
+    ViewData["Title"] = "Productos";
+    var modelSearchQuery = ViewBag.SearchQuery as SearchQueryProductLLVGDTO;
+}
+<partial name="SearchQuery" model="modelSearchQuery" />
+<partial name="SearchResult" model="Model" />
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Crear nuevo</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CountRow)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Data)
+        {
+        <tr>
+            <td>
+                    @Html.DisplayFor(modelItem => item.NombreLLVG)
+            </td>
+            <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
