@@ -1,5 +1,5 @@
-﻿@using LLVG20240907.DTOs.ProductsDTOs;
-@model IEnumerable<LLVG20240907.DTOs.ProductsDTOs.SearchResultProductLLVGDTO>
+﻿
+@model LLVG20240907.DTOs.ProductsDTOs.SearchResultProductLLVGDTO
 
 @{
     ViewData["Title"] = "Productos";
@@ -17,7 +17,7 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.CountRow)
+                Cantidad de productos
             </th>
             <th></th>
         </tr>
@@ -25,16 +25,16 @@
     <tbody>
         @foreach (var item in Model.Data)
         {
-        <tr>
-            <td>
+            <tr>
+                <td>
                     @Html.DisplayFor(modelItem => item.NombreLLVG)
-            </td>
-            <td>
+                </td>
+                <td>
                     @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
                     @Html.ActionLink("Details", "Details", new { id = item.Id }) |
                     @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-            </td>
-        </tr>
-}
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
