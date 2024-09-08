@@ -10,23 +10,18 @@ namespace LLVG20240907G5.API.Endpoints
         {
             app.MapPost("/product/search", async (SearchQueryProductLLVGDTO productDTO, ProductDAL productDAL) =>
             {
-                // Ajuste temporal para verificar si la búsqueda encuentra productos
                 var product = new ProductLLVG
                 {
                     NombreLLVG = productDTO.NombreLLVG_Like
                 };
 
-                // Omitir el conteo de filas inicialmente para simplificar la lógica
                 var products = await productDAL.Search(product, skip: productDTO.Skip, take: productDTO.Take);
 
-
-                // Verificar si se encontraron productos
                 if (products == null || !products.Any())
                 {
                     return Results.NotFound("No se encontraron productos con los criterios de búsqueda proporcionados.");
                 }
 
-                // Crear el resultado
                 var productResult = new SearchResultProductLLVGDTO
                 {
                     Data = products.Select(s => new SearchResultProductLLVGDTO.ProductLLVGDTO
@@ -53,7 +48,7 @@ namespace LLVG20240907G5.API.Endpoints
 
                 var productDTO = new GetIdResultProductLLVGDTO
                 {
-                    Id = product.id,
+                    Id = product.Id,
                     NombreLLVG = product.NombreLLVG,
                     DescripcionLLVG = product.DescripcionLLVG,
                     PrecioLLVG = product.PrecioLLVG
@@ -116,5 +111,4 @@ namespace LLVG20240907G5.API.Endpoints
             });
         }
     }
-
 }
