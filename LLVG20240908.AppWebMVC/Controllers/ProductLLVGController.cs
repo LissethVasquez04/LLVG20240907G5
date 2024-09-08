@@ -89,7 +89,7 @@ namespace LLVG20240907G5.AppWebMVC.Controllers
                     var createdProduct = await response.Content.ReadFromJsonAsync<GetIdResultProductLLVGDTO>();
                     if (createdProduct != null)
                     {
-                        return RedirectToAction(nameof(Details), new { id = createdProduct.Id });
+                        return RedirectToAction(nameof(Index), new { id = createdProduct.Id });
                     }
                 }
 
@@ -118,13 +118,7 @@ namespace LLVG20240907G5.AppWebMVC.Controllers
                     result = await response.Content.ReadFromJsonAsync<GetIdResultProductLLVGDTO>();
                 }
 
-                return View(new EditProductLLVGDTO
-                {
-                    Id = result.Id,
-                    NombreLLVG = result.NombreLLVG,
-                    DescripcionLLVG = result.DescripcionLLVG,
-                    PrecioLLVG = result.PrecioLLVG
-                });
+                return View(new EditProductLLVGDTO(result ?? new GetIdResultProductLLVGDTO()));
             }
             catch (Exception ex)
             {
@@ -145,11 +139,7 @@ namespace LLVG20240907G5.AppWebMVC.Controllers
 
                 if (response.IsSuccessStatusCode)
                 {
-                    var updatedProduct = await response.Content.ReadFromJsonAsync<GetIdResultProductLLVGDTO>();
-                    if (updatedProduct != null)
-                    {
-                        return RedirectToAction(nameof(Details), new { id = updatedProduct.Id });
-                    }
+                    return RedirectToAction(nameof(Index));
                 }
 
                 ViewBag.Error = "Error al intentar editar el registro";
@@ -160,6 +150,8 @@ namespace LLVG20240907G5.AppWebMVC.Controllers
                 ViewBag.Error = ex.Message;
                 return View(editProductDTO);
             }
+
+
         }
 
         public async Task<IActionResult> Delete(int id)
