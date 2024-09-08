@@ -13,7 +13,6 @@
 
   <ItemGroup>
     <Folder Include="Modelos\DAL\" />
-    <Folder Include="Modelos\EN\" />
   </ItemGroup>
 
 </Project>
