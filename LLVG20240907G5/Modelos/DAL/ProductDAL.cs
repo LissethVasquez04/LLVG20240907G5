@@ -26,12 +26,12 @@ namespace LLVG20240907G5.Modelos.DAL
         public async Task<int> Edit(ProductLLVG productLLVG)
         {
             int result = 0;
-            var productUodate = await GetById(ProductLLVG.id);
+            var productUodate = await GetById(productLLVG.id);
             if (productUodate.id != 0)
             {
-                productUodate.NombreLLVG = ProductLLVG.NombreLLVG;
-                productUodate.DescripcionLLVG = ProductLLVG.DescripcionLLVG;
-                productUodate.PrecioLLVG = ProductLLVG.PrecioLLVG;
+                productUodate.NombreLLVG = productLLVG.NombreLLVG;
+                productUodate.DescripcionLLVG = productLLVG.DescripcionLLVG;
+                productUodate.PrecioLLVG = productLLVG.PrecioLLVG;
                 result = await _context.SaveChangesAsync();
             }
             return result;
@@ -71,4 +71,4 @@ namespace LLVG20240907G5.Modelos.DAL
         }
     }
 }
-}
+
