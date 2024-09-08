@@ -1,0 +1,43 @@
+﻿@model LLVG20240907.DTOs.ProductsDTOs.CreateProductLLVGDTO
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Crear</h1>
+
+<h4>CreateProductLLVGDTO</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="NombreLLVG" class="control-label"></label>
+                <input asp-for="NombreLLVG" class="form-control" />
+                <span asp-validation-for="NombreLLVG" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DescripcionLLVG" class="control-label"></label>
+                <input asp-for="DescripcionLLVG" class="form-control" />
+                <span asp-validation-for="DescripcionLLVG" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PrecioLLVG" class="control-label"></label>
+                <input asp-for="PrecioLLVG" class="form-control" />
+                <span asp-validation-for="PrecioLLVG" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">volver</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
