@@ -1,4 +1,4 @@
-﻿namespace LLVG20240907G5.Modelos.EN
+﻿namespace LLVG20240907G5.API.Modelos.EN
 {
     public class ProductLLVG
     {

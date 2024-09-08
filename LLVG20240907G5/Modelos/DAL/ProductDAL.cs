@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using LLVG20240907G5.Modelos.EN;
-namespace LLVG20240907G5.Modelos.DAL
+using LLVG20240907G5.API.Modelos.EN;
+namespace LLVG20240907G5.API.Modelos.DAL
 {
     public class ProductDAL
     {
