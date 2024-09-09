@@ -1,0 +1,112 @@
+﻿@page "/edit-product/{Id:int}"
+
+@using AMMA202409018.DTOs.ProductsDTOs
+@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.AspNetCore.Components
+@using AMMA202409018.API.Services
+
+@if (!isSuccess && !isError)
+{
+    <h3>Editar Producto</h3>
+
+    <EditForm Model="product" OnValidSubmit="Edit">
+        <DataAnnotationsValidator />
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="Name">Nombre:</label>
+                    <InputText class="form-control" id="Name" @bind-Value="product.NombreAMMA" />
+                    <ValidationMessage For="() => product.NombreAMMA" />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="Descripcion">Descripción:</label>
+                    <InputTextArea class="form-control" id="Descripcion" @bind-Value="product.DescripcionAMMA" />
+                    <ValidationMessage For="() => product.DescripcionAMMA" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="Precio">Precio:</label>
+                    <InputNumber class="form-control" id="Precio" @bind-Value="product.PrecioAMMA" />
+                    <ValidationMessage For="() => product.PrecioAMMA" />
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-12">
+                <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                <NavLink href="/product-list" class="btn btn-secondary">Cancelar</NavLink>
+            </div>
+        </div>
+    </EditForm>
+}
+else if (isSuccess)
+{
+    <p class="alert alert-success">Producto modificado con éxito.</p>
+    <NavLink href="/product-list" class="btn btn-primary">Ver lista de productos</NavLink>
+}
+else if (isError)
+{
+    <p class="alert alert-danger">Ocurrió un error al intentar modificar el producto.</p>
+    <NavLink href="/product-list" class="btn btn-primary">Volver a intentar</NavLink>
+}
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    [Inject]
+    ProductAMMAService productService { get; set; }
+
+    EditProductAMMADTO product = new EditProductAMMADTO();
+    bool isSuccess = false;
+    bool isError = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var productDetail = await productService.GetById(Id);
+            if (productDetail != null)
+            {
+                product = new EditProductAMMADTO
+                    {
+                        Id = productDetail.Id,
+                        NombreAMMA = productDetail.NombreAMMA,
+                        DescripcionAMMA = productDetail.DescripcionAMMA,
+                        PrecioAMMA = productDetail.PrecioAMMA
+                    };
+            }
+            else
+            {
+                isError = true; // Product not found
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Exception: {ex.Message}");
+            isError = true;
+        }
+    }
+
+    private async Task Edit()
+    {
+        try
+        {
+            var result = await productService.Edit(product);
+
+            isSuccess = result > 0;  // Success if result is greater than 0
+            isError = !isSuccess;    // Error if not successful
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Exception: {ex.Message}");
+            isError = true;
+        }
+    }
+}
