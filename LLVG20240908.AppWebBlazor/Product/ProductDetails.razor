@@ -4,57 +4,67 @@
 @using Microsoft.AspNetCore.Components
 @using LLVG20240907.API.Services
 
-<h3>Ver Producto</h3>
+<section class="product-details-section p-4 bg-light rounded shadow-lg">
+    <h3 class="text-center mb-4">Detalles del Producto</h3>
 
-@if (isError)
-{
-    <p class="alert alert-danger">Ocurrió un error al intentar obtener los detalles del producto.</p>
-    <NavLink href="/product-list" class="btn btn-primary">Ir a buscar productos</NavLink>
-}
-else if (product == null)
-{
-    <p class="alert alert-warning">Producto no encontrado.</p>
-    <NavLink href="/product-list" class="btn btn-primary">Ir a buscar productos</NavLink>
-}
-else
-{
-    <div class="row">
-        <div class="col-4">
-            <div class="form-group">
-                <label for="NombreLLVG">Nombre:</label>
-                <input type="text" class="form-control" disabled value="@product.NombreLLVG" />
-            </div>
-        </div>
-        <div class="col-4">
-            <div class="form-group">
-                <label for="DescripcionLLVG">Descripción:</label>
-                <textarea disabled class="form-control" value="@product.DescripcionLLVG"></textarea>
-            </div>
-        </div>
-        <div class="col-4">
-            <div class="form-group">
-                <label for="PrecioLLVG">Precio:</label>
-                <input type="text" class="form-control" disabled value="@product.PrecioLLVG" />
-            </div>
-        </div>
-    </div>
-    <br />
-    <div class="row">
-        <div class="col-12">
+    @if (isError)
+    {
+        <div class="alert alert-danger text-center" role="alert">
+            <h4 class="alert-heading">Error</h4>
+            <p>Ocurrió un error al intentar obtener los detalles del producto.</p>
+            <hr />
             <NavLink href="/product-list" class="btn btn-primary">Ir a buscar productos</NavLink>
         </div>
-    </div>
-}
+    }
+    else if (product == null)
+    {
+        <div class="alert alert-warning text-center" role="alert">
+            <h4 class="alert-heading">Advertencia</h4>
+            <p>Producto no encontrado.</p>
+            <hr />
+            <NavLink href="/product-list" class="btn btn-primary">Ir a buscar productos</NavLink>
+        </div>
+    }
+    else
+    {
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <div class="form-group">
+                        <label for="NombreLLVG" class="form-label">Nombre:</label>
+                        <input type="text" class="form-control" id="NombreLLVG" disabled value="@product.NombreLLVG" />
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <div class="form-group">
+                        <label for="DescripcionLLVG" class="form-label">Descripción:</label>
+                        <textarea id="DescripcionLLVG" class="form-control" disabled>@product.DescripcionLLVG</textarea>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <div class="form-group">
+                        <label for="PrecioLLVG" class="form-label">Precio:</label>
+                        <input type="text" class="form-control" id="PrecioLLVG" disabled value="@product.PrecioLLVG.ToString("C")" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-4">
+                <NavLink href="/product-list" class="btn btn-primary">Ir a buscar productos</NavLink>
+            </div>
+        </div>
+    }
+</section>
 
 @code {
     [Parameter]
     public int Id { get; set; }
 
     [Inject]
-    ProductLLVGService productService { get; set; }
+    private ProductLLVGService productService { get; set; }
 
-    GetIdResultProductLLVGDTO product;
-    bool isError;
+    private GetIdResultProductLLVGDTO product;
+    private bool isError;
 
     protected override async Task OnInitializedAsync()
     {
@@ -73,4 +83,3 @@ else
         }
     }
 }
-

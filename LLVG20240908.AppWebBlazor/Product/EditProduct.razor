@@ -5,63 +5,70 @@
 @using Microsoft.AspNetCore.Components
 @using LLVG20240907.API.Services
 
-@if (!isSuccess && !isError)
-{
-    <h3>Editar Producto</h3>
+<section class="edit-product-section p-4 bg-light rounded shadow-lg">
+    @if (!isSuccess && !isError)
+    {
+        <h3 class="text-center mb-4">Editar Producto</h3>
 
-    <EditForm Model="product" OnValidSubmit="Edit">
-        <DataAnnotationsValidator />
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="NombreLLVG">Nombre:</label>
-                    <InputText class="form-control" id="NombreLLVG" @bind-Value="product.NombreLLVG" />
-                    <ValidationMessage For="() => product.NombreLLVG" />
+        <EditForm Model="product" OnValidSubmit="Edit">
+            <DataAnnotationsValidator />
+            <div class="row mb-3">
+                <div class="col-md-6 mb-3">
+                    <div class="form-group">
+                        <label for="NombreLLVG">Nombre:</label>
+                        <InputText class="form-control" id="NombreLLVG" @bind-Value="product.NombreLLVG" placeholder="Ingrese el nombre del producto" />
+                        <ValidationMessage For="() => product.NombreLLVG" />
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <div class="form-group">
+                        <label for="DescripcionLLVG">Descripción:</label>
+                        <InputTextArea class="form-control" id="DescripcionLLVG" @bind-Value="product.DescripcionLLVG" placeholder="Ingrese una descripción del producto" />
+                        <ValidationMessage For="() => product.DescripcionLLVG" />
+                    </div>
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="DescripcionLLVG">Descripción:</label>
-                    <InputTextArea class="form-control" id="DescripcionLLVG" @bind-Value="product.DescripcionLLVG" />
-                    <ValidationMessage For="() => product.DescripcionLLVG" />
+            <div class="row mb-4">
+                <div class="col-md-6 mb-3">
+                    <div class="form-group">
+                        <label for="PrecioLLVG">Precio:</label>
+                        <InputNumber class="form-control" id="PrecioLLVG" @bind-Value="product.PrecioLLVG" placeholder="Ingrese el precio del producto" />
+                        <ValidationMessage For="() => product.PrecioLLVG" />
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="PrecioLLVG">Precio:</label>
-                    <InputNumber class="form-control" id="PrecioLLVG" @bind-Value="product.PrecioLLVG" />
-                    <ValidationMessage For="() => product.PrecioLLVG" />
-                </div>
-            </div>
-        </div>
-        <br />
-        <div class="row">
-            <div class="col-md-12">
+            <div class="text-center">
                 <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-                <NavLink href="/product-list" class="btn btn-secondary">Cancelar</NavLink>
+                <NavLink href="/product-list" class="btn btn-outline-secondary ms-2">Cancelar</NavLink>
             </div>
+        </EditForm>
+    }
+    else if (isSuccess)
+    {
+        <div class="alert alert-success text-center" role="alert">
+            <h4 class="alert-heading">¡Éxito!</h4>
+            <p>Producto modificado con éxito.</p>
+            <hr />
+            <NavLink href="/product-list" class="btn btn-primary">Ver lista de productos</NavLink>
         </div>
-    </EditForm>
-}
-else if (isSuccess)
-{
-    <p class="alert alert-success">Producto modificado con éxito.</p>
-    <NavLink href="/product-list" class="btn btn-primary">Ver lista de productos</NavLink>
-}
-else if (isError)
-{
-    <p class="alert alert-danger">Ocurrió un error al intentar modificar el producto.</p>
-    <NavLink href="/product-list" class="btn btn-primary">Volver a intentar</NavLink>
-}
+    }
+    else if (isError)
+    {
+        <div class="alert alert-danger text-center" role="alert">
+            <h4 class="alert-heading">Error</h4>
+            <p>Ocurrió un error al intentar modificar el producto.</p>
+            <hr />
+            <NavLink href="/product-list" class="btn btn-primary">Volver a intentar</NavLink>
+        </div>
+    }
+</section>
 
 @code {
     [Parameter]
     public int Id { get; set; }
 
     [Inject]
-    ProductLLVGService productService { get; set; }
+    private ProductLLVGService productService { get; set; }
 
     EditProductLLVGDTO product = new EditProductLLVGDTO();
     bool isSuccess = false;
