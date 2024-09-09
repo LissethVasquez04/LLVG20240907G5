@@ -1,0 +1,88 @@
+﻿@page "/delete-product/{Id:int}"
+
+@using LLVG20240907.DTOs.ProductsDTOs
+@using Microsoft.AspNetCore.Components
+@using LLVG20240907.API.Services
+
+<h3>Eliminar Producto</h3>
+
+@if (isSuccess == false && isError == false)
+{
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="NombreLLVG">Nombre:</label>
+                <input type="text" class="form-control" id="NombreLLVG" disabled @bind="product.NombreLLVG" />
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="DescripcionLLVG">Descripción:</label>
+                <textarea class="form-control" id="DescripcionLLVG" disabled @bind="product.DescripcionLLVG"></textarea>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="PrecioLLVG">Precio:</label>
+                <input type="text" class="form-control" id="PrecioLLVG" disabled @bind="product.PrecioLLVG" />
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-12">
+            <button class="btn btn-danger" @onclick="async () => await Delete()">Eliminar</button>
+            <NavLink href="/product-list" class="btn btn-secondary">Cancelar</NavLink>
+        </div>
+    </div>
+}
+else if (isError)
+{
+    <p class="alert alert-danger">Ocurrió un error al intentar eliminar el producto.</p>
+    <NavLink href="/product-list" class="btn btn-primary">Aceptar</NavLink>
+}
+else if (isSuccess)
+{
+    <p class="alert alert-success">Producto eliminado con éxito.</p>
+    <NavLink href="/product-list" class="btn btn-primary">Aceptar</NavLink>
+}
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    [Inject]
+    ProductLLVGService productService { get; set; }  // Actualiza el nombre del servicio si es necesario
+
+    GetIdResultProductLLVGDTO product = new GetIdResultProductLLVGDTO();
+    bool isSuccess = false;
+    bool isError = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            product = await productService.GetById(Id);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Exception: {ex.Message}");
+            isError = true;
+        }
+    }
+
+    private async Task Delete()
+    {
+        try
+        {
+            int result = await productService.Delete(Id);
+            isSuccess = result > 0;
+            isError = !isSuccess;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Exception: {ex.Message}");
+            isError = true;
+        }
+    }
+}
