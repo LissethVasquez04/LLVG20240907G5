@@ -7,23 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="Product\DeleteProduct.razor" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\LLVG20240907.DTOs\LLVG20240907.DTOs.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <UpToDateCheckInput Remove="Product\DeleteProduct.razor" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <_ContentIncludedByDefault Remove="Product\DeleteProduct.razor" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Product\DeleteProduct.razor" />
   </ItemGroup>
 
 </Project>

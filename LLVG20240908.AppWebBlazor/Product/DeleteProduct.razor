@@ -37,12 +37,12 @@
         </div>
     </div>
 }
-else if (isError)
+else if (isSuccess)
 {
     <p class="alert alert-danger">Ocurrió un error al intentar eliminar el producto.</p>
     <NavLink href="/product-list" class="btn btn-primary">Aceptar</NavLink>
 }
-else if (isSuccess)
+else if (isError)
 {
     <p class="alert alert-success">Producto eliminado con éxito.</p>
     <NavLink href="/product-list" class="btn btn-primary">Aceptar</NavLink>
@@ -53,7 +53,7 @@ else if (isSuccess)
     public int Id { get; set; }
 
     [Inject]
-    ProductLLVGService productService { get; set; }  // Actualiza el nombre del servicio si es necesario
+    private ProductLLVGService productService { get; set; } // Actualiza el nombre del servicio si es necesario
 
     GetIdResultProductLLVGDTO product = new GetIdResultProductLLVGDTO();
     bool isSuccess = false;
@@ -61,6 +61,7 @@ else if (isSuccess)
 
     protected override async Task OnInitializedAsync()
     {
+
         try
         {
             product = await productService.GetById(Id);
