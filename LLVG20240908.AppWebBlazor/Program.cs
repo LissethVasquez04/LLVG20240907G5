@@ -1,13 +1,19 @@
-using LLVG20240908.AppWebBlazor.Data;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
-
+using LLVG20240907.API.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddSingleton<WeatherForecastService>();
+builder.Services.AddSingleton<ProductLLVGService>();
+
+builder.Services.AddHttpClient("API", c =>
+{
+    // Configura la dirección base del cliente HTTP desde la configuración
+    c.BaseAddress = new Uri(builder.Configuration["UrlsAPI:CRM"]);
+    // Puedes configurar otras opciones del HttpClient aquí según sea necesario
+});
+
+
 
 var app = builder.Build();
 
