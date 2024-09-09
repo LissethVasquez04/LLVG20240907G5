@@ -1,9 +1,9 @@
 ﻿@page "/edit-product/{Id:int}"
 
-@using AMMA202409018.DTOs.ProductsDTOs
+@using LLVG20240907.DTOs.ProductsDTOs
 @using Microsoft.AspNetCore.Components.Forms
 @using Microsoft.AspNetCore.Components
-@using AMMA202409018.API.Services
+@using LLVG20240907.API.Services
 
 @if (!isSuccess && !isError)
 {
@@ -14,25 +14,25 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="Name">Nombre:</label>
-                    <InputText class="form-control" id="Name" @bind-Value="product.NombreAMMA" />
-                    <ValidationMessage For="() => product.NombreAMMA" />
+                    <label for="NombreLLVG">Nombre:</label>
+                    <InputText class="form-control" id="NombreLLVG" @bind-Value="product.NombreLLVG" />
+                    <ValidationMessage For="() => product.NombreLLVG" />
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="Descripcion">Descripción:</label>
-                    <InputTextArea class="form-control" id="Descripcion" @bind-Value="product.DescripcionAMMA" />
-                    <ValidationMessage For="() => product.DescripcionAMMA" />
+                    <label for="DescripcionLLVG">Descripción:</label>
+                    <InputTextArea class="form-control" id="DescripcionLLVG" @bind-Value="product.DescripcionLLVG" />
+                    <ValidationMessage For="() => product.DescripcionLLVG" />
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="Precio">Precio:</label>
-                    <InputNumber class="form-control" id="Precio" @bind-Value="product.PrecioAMMA" />
-                    <ValidationMessage For="() => product.PrecioAMMA" />
+                    <label for="PrecioLLVG">Precio:</label>
+                    <InputNumber class="form-control" id="PrecioLLVG" @bind-Value="product.PrecioLLVG" />
+                    <ValidationMessage For="() => product.PrecioLLVG" />
                 </div>
             </div>
         </div>
@@ -61,9 +61,9 @@ else if (isError)
     public int Id { get; set; }
 
     [Inject]
-    ProductAMMAService productService { get; set; }
+    ProductLLVGService productService { get; set; }
 
-    EditProductAMMADTO product = new EditProductAMMADTO();
+    EditProductLLVGDTO product = new EditProductLLVGDTO();
     bool isSuccess = false;
     bool isError = false;
 
@@ -74,12 +74,12 @@ else if (isError)
             var productDetail = await productService.GetById(Id);
             if (productDetail != null)
             {
-                product = new EditProductAMMADTO
+                product = new EditProductLLVGDTO
                     {
                         Id = productDetail.Id,
-                        NombreAMMA = productDetail.NombreAMMA,
-                        DescripcionAMMA = productDetail.DescripcionAMMA,
-                        PrecioAMMA = productDetail.PrecioAMMA
+                        NombreLLVG = productDetail.NombreLLVG,
+                        DescripcionLLVG = productDetail.DescripcionLLVG,
+                        PrecioLLVG = productDetail.PrecioLLVG
                     };
             }
             else

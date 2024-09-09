@@ -1,0 +1,76 @@
+﻿@page "/product-details/{Id:int}"
+
+@using LLVG20240907.DTOs.ProductsDTOs
+@using Microsoft.AspNetCore.Components
+@using LLVG20240907.API.Services
+
+<h3>Ver Producto</h3>
+
+@if (isError)
+{
+    <p class="alert alert-danger">Ocurrió un error al intentar obtener los detalles del producto.</p>
+    <NavLink href="/product-list" class="btn btn-primary">Ir a buscar productos</NavLink>
+}
+else if (product == null)
+{
+    <p class="alert alert-warning">Producto no encontrado.</p>
+    <NavLink href="/product-list" class="btn btn-primary">Ir a buscar productos</NavLink>
+}
+else
+{
+    <div class="row">
+        <div class="col-4">
+            <div class="form-group">
+                <label for="NombreLLVG">Nombre:</label>
+                <input type="text" class="form-control" disabled value="@product.NombreLLVG" />
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="form-group">
+                <label for="DescripcionLLVG">Descripción:</label>
+                <textarea disabled class="form-control" value="@product.DescripcionLLVG"></textarea>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="form-group">
+                <label for="PrecioLLVG">Precio:</label>
+                <input type="text" class="form-control" disabled value="@product.PrecioLLVG" />
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-12">
+            <NavLink href="/product-list" class="btn btn-primary">Ir a buscar productos</NavLink>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    [Inject]
+    ProductLLVGService productService { get; set; }
+
+    GetIdResultProductLLVGDTO product;
+    bool isError;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            product = await productService.GetById(Id);
+            if (product == null)
+            {
+                isError = true; // Product not found
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Exception: {ex.Message}");
+            isError = true;
+        }
+    }
+}
+
