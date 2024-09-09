@@ -10,8 +10,4 @@
     <ProjectReference Include="..\LLVG20240907.DTOs\LLVG20240907.DTOs.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Product\" />
-  </ItemGroup>
-
 </Project>
