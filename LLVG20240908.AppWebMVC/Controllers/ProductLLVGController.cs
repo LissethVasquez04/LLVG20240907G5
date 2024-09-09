@@ -44,7 +44,11 @@ namespace LLVG20240907G5.AppWebMVC.Controllers
 
         public async Task<IActionResult> Details(int id)
         {
-            if (id <= 0) return BadRequest("ID inválido");
+            if (id <= 0)
+            {
+                // Redirige a la acción "Edit" si el ID es inválido.
+                return RedirectToAction("Edit", new { id = id });
+            }
 
             var result = new GetIdResultProductLLVGDTO();
 
@@ -57,7 +61,13 @@ namespace LLVG20240907G5.AppWebMVC.Controllers
                     result = await response.Content.ReadFromJsonAsync<GetIdResultProductLLVGDTO>();
                 }
 
-                return View(result ?? new GetIdResultProductLLVGDTO());
+                // Si no se encuentra el producto, podrías redirigir a una página de error o a la lista
+                if (result == null || result.Id <= 0)
+                {
+                    return RedirectToAction("Index");
+                }
+
+                return View(result);
             }
             catch (Exception ex)
             {

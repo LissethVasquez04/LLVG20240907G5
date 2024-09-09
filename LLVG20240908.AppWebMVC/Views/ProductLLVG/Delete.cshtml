@@ -1,44 +1,59 @@
 ﻿@model LLVG20240907.DTOs.ProductsDTOs.GetIdResultProductLLVGDTO
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Eliminar Producto";
 }
 
-<h1>Eliminar</h1>
+<div class="container mt-5">
+    <div class="card shadow-sm">
+        <div class="card-header bg-danger text-white">
+            <h5 class="mb-0">Eliminar Producto</h5>
+        </div>
+        <div class="card-body">
+            <h3 class="mb-4">¿Estás seguro de querer eliminar este producto?</h3>
 
-<h3>Estas seguro de querer eliminarlo?</h3>
-<div>
-    
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Id)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Id)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.NombreLLVG)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.NombreLLVG)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DescripcionLLVG)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DescripcionLLVG)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PrecioLLVG)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PrecioLLVG)
-        </dd>
-    </dl>
-    
-    <form asp-action="Delete">
-        <input type="submit" value="Eliminar" class="btn btn-danger" /> |
-        <a asp-action="Index">Volver</a>
-    </form>
+            <dl class="row mb-4">
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.Id)
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Id)
+                </dd>
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.NombreLLVG)
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.NombreLLVG)
+                </dd>
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.DescripcionLLVG)
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.DescripcionLLVG)
+                </dd>
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.PrecioLLVG)
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.PrecioLLVG)
+                </dd>
+            </dl>
+
+            <div class="d-flex justify-content-between">
+                <form asp-action="Delete" method="post">
+                    <button type="submit" class="btn btn-danger btn-lg">
+                        <i class="bi bi-trash"></i> Eliminar
+                    </button>
+                </form>
+                <a asp-action="Index" class="btn btn-secondary btn-lg">
+                    <i class="bi bi-arrow-left-circle"></i> Volver
+                </a>
+            </div>
+        </div>
+    </div>
 </div>
+
+@section Scripts {
+    <!-- Include Bootstrap Icons for form buttons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+}

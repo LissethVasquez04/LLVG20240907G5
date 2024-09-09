@@ -1,41 +1,50 @@
 ﻿@model LLVG20240907.DTOs.ProductsDTOs.CreateProductLLVGDTO
 
 @{
-    ViewData["Title"] = "Crear";
+    ViewData["Title"] = "Crear Nuevo Producto";
 }
 
-<h4>Crear Nuevo Producto</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="NombreLLVG" class="control-label"></label>
-                <input asp-for="NombreLLVG" class="form-control" />
-                <span asp-validation-for="NombreLLVG" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DescripcionLLVG" class="control-label"></label>
-                <input asp-for="DescripcionLLVG" class="form-control" />
-                <span asp-validation-for="DescripcionLLVG" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PrecioLLVG" class="control-label"></label>
-                <input asp-for="PrecioLLVG" class="form-control" />
-                <span asp-validation-for="PrecioLLVG" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+<div class="container mt-5">
+    <div class="card shadow-sm">
+        <div class="card-header bg-success text-white">
+            <h5 class="mb-0">Crear Nuevo Producto</h5>
+        </div>
+        <div class="card-body">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+                <div class="mb-3">
+                    <label asp-for="NombreLLVG" class="form-label"></label>
+                    <input asp-for="NombreLLVG" class="form-control" placeholder="Nombre del Producto" />
+                    <span asp-validation-for="NombreLLVG" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="DescripcionLLVG" class="form-label"></label>
+                    <textarea asp-for="DescripcionLLVG" class="form-control" rows="4" placeholder="Descripción del Producto"></textarea>
+                    <span asp-validation-for="DescripcionLLVG" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="PrecioLLVG" class="form-label"></label>
+                    <input asp-for="PrecioLLVG" class="form-control" placeholder="Precio del Producto" />
+                    <span asp-validation-for="PrecioLLVG" class="text-danger"></span>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <button type="submit" class="btn btn-success btn-lg">
+                        <i class="bi bi-check-circle"></i> Crear
+                    </button>
+                    <a asp-action="Index" class="btn btn-secondary btn-lg">
+                        <i class="bi bi-arrow-left-circle"></i> Volver a la Lista
+                    </a>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Volver a la Lista</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <!-- Include Bootstrap Icons for form buttons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 }
