@@ -1,0 +1,99 @@
+﻿@page "/create-product"
+
+@using LLVG20240907.DTOs.ProductsDTOs
+@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.AspNetCore.Components
+@using LLVG20240907.API.Services
+
+@if (isSuccess == false && isError == false)
+{
+    <h3>Crear Nuevo Producto</h3>
+
+    <EditForm Model="product" OnValidSubmit="Create">
+        <DataAnnotationsValidator />
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="NombreLLVG">Nombre:</label>
+                    <InputText class="form-control" id="NombreLLVG" @bind-Value="product.NombreLLVG" />
+                    <ValidationMessage For="() => product.NombreLLVG" />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="DescripcionLLVG">Descripción:</label>
+                    <InputTextArea class="form-control" id="DescripcionLLVG" @bind-Value="product.DescripcionLLVG" />
+                    <ValidationMessage For="() => product.DescripcionLLVG" />
+                </div>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="PrecioLLVG">Precio:</label>
+                    <InputNumber class="form-control" id="PrecioLLVG" @bind-Value="product.PrecioLLVG" />
+                    <ValidationMessage For="() => product.PrecioLLVG" />
+                </div>
+            </div>
+        </div>
+        <div class="d-flex justify-content-between">
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <NavLink href="/product-list" class="btn btn-secondary">Cancelar</NavLink>
+        </div>
+    </EditForm>
+}
+else if (isError)
+{
+    product = new CreateProductLLVGDTO();
+    isError = false;
+    <p class="alert alert-danger">Ocurrió un error al intentar registrar el producto.</p>
+    <div class="d-flex justify-content-between">
+        <NavLink href="/create-product" class="btn btn-primary">Ir a crear</NavLink>
+        <NavLink href="/product-list" class="btn btn-secondary">Ir a buscar productos</NavLink>
+    </div>
+}
+else if (isSuccess)
+{
+    <p class="alert alert-success">Producto creado con éxito.</p>
+    <NavLink href="/product-list" class="btn btn-primary">Ir a buscar productos</NavLink>
+}
+
+@code {
+    // Inyección del ProductService para interactuar con los datos del producto
+    [Inject]
+    ProductLLVGService productService { get; set; }
+
+    // Instancia de CreateProductLLVGDTO para la creación del nuevo producto
+    CreateProductLLVGDTO product = new CreateProductLLVGDTO();
+    bool isSuccess = false;  // Indicador para éxito en la creación
+    bool isError = false;    // Indicador para errores en la creación
+
+    private async Task Create()
+    {
+        try
+        {
+            var result = await productService.Create(product);
+            Console.WriteLine($"Result from Create: {result}"); // Depuración
+            if (result > 0)  // Considera el resultado positivo para éxito
+            {
+                isSuccess = true;
+            }
+            else
+            {
+                isError = true;
+            }
+        }
+        catch (Exception ex)
+        {
+            // Manejo de excepciones para detectar problemas inesperados
+            Console.WriteLine($"Exception: {ex.Message}");
+            isError = true;
+        }
+    }
+
+    private void GoCreate()
+    {
+        isSuccess = false;  // Reiniciar isSuccess para una nueva creación
+        isError = false;    // Reiniciar isError para un estado limpio
+    }
+}
