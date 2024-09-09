@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Data\" />
+    <ProjectReference Include="..\LLVG20240907.DTOs\LLVG20240907.DTOs.csproj" />
   </ItemGroup>
 
 </Project>
